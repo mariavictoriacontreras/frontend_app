@@ -1,16 +1,16 @@
-// src/App.tsx
-import { Routes, Route } from 'react-router-dom';
-// import UserList from './pages/UserList.tsx';
-// import UserForm from './pages/UserForm.tsx';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import UserList from "./pages/UserList";
+import UserForm from "./pages/UserForm";
+import './styles/theme.scss';
 
-function App() {
+export default function App() {
   return (
-    <Routes>
-      {/* <Route path="/users" element={<UserList />} />
-      <Route path="/users/new" element={<UserForm />} />
-      <Route path="/users/:id" element={<UserForm />} /> */}
-    </Routes>
+    <Router>
+      <Routes>
+        <Route path="/users" element={<UserList />} />
+        <Route path="/users/new" element={<UserForm />} />
+        <Route path="/users/edit/:id" element={<UserForm />} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;

@@ -1,0 +1,189 @@
+@use "sass:color";
+
+
+html, body, #root {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+// 🎨 Paleta cálida y minimalista
+// $bg-color: #2d82e2;         // fondo general
+
+$bg-color: #FAF8ED;         // fondo general
+$secondary-bg: #FFD482;     // secciones resaltadas
+$primary-color: #F66F4D;    // botón principal
+$dark-btn: #2D3134;         // botón oscuro
+$accent-color: #6A4E42;     // marrón cálido (headers)
+$text-color: #333;
+
+// ⚡ Sobrescribir variables Bootstrap
+$body-bg: $bg-color;
+$body-color: $text-color;
+$primary: $primary-color;
+$secondary: $secondary-bg;
+$danger: #dc3545;
+
+@import "bootstrap/scss/bootstrap";
+
+// ----------- Global -----------
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: $bg-color;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  color: $accent-color;
+}
+
+// ----------- Botones -----------
+.btn-primary {
+  background-color: $primary-color;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: color.adjust($primary-color, $lightness: -5%);
+    transform: translateY(-1px);
+  }
+}
+
+.btn-lg-rounded {
+  border-radius: 30px;
+  padding: 10px 25px;
+}
+
+.btn-sm-rounded {
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 0.85rem;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  border-radius: 25px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: darken(#dc3545, 5%);
+    transform: translateY(-1px);
+  }
+}
+
+// ----------- Tabla -----------
+.table {
+  background-color: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+  th {
+    background-color: $secondary-bg;
+    color: $accent-color;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  td, th {
+    padding: 12px;
+    vertical-align: middle;
+  }
+}
+
+// ----------- Inputs y forms -----------
+input, select {
+  border-radius: 20px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  width: 100%;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 5px rgba($primary-color, 0.5);
+  }
+}
+
+.form-container {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: auto;
+}
+
+// ----------- Mobile First: tabla como cards -----------
+.table-responsive {
+  display: block;
+  width: 100%;
+
+  table {
+    border: 0;
+  }
+
+  thead {
+    display: none; // ocultamos headers en mobile
+  }
+
+  tr {
+    display: block;
+    margin-bottom: 1rem;
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.05);
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &::before {
+      content: attr(data-label);
+      font-weight: bold;
+      margin-right: 10px;
+      color: $primary-color;
+    }
+  }
+}
+
+// ----------- Desktop -----------
+@media (min-width: 768px) {
+  .table-responsive {
+    table {
+      display: table;
+    }
+    thead {
+      display: table-header-group;
+    }
+    tr {
+      display: table-row;
+      margin-bottom: 0;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+    td {
+      display: table-cell;
+      border-bottom: 1px solid #dee2e6;
+      &::before {
+        content: none;
+      }
+    }
+  }
+}
