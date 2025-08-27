@@ -8,7 +8,6 @@ html, body, #root {
   padding: 0 !important;
 }
 
-// 🎨 Paleta cálida y minimalista
 // $bg-color: #2d82e2;         // fondo general
 
 $bg-color: #FAF8ED;         // fondo general
@@ -18,7 +17,6 @@ $dark-btn: #2D3134;         // botón oscuro
 $accent-color: #6A4E42;     // marrón cálido (headers)
 $text-color: #333;
 
-// ⚡ Sobrescribir variables Bootstrap
 $body-bg: $bg-color;
 $body-color: $text-color;
 $primary: $primary-color;
@@ -27,12 +25,20 @@ $danger: #dc3545;
 
 @import "bootstrap/scss/bootstrap";
 
-// ----------- Global -----------
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-base: 'Poppins', sans-serif;
+}
+
+
 body {
-  font-family: 'Arial', sans-serif;
+  // font-family: 'Poppins', sans-serif;
   background-color: $bg-color;
   margin: 0;
+  font-family: var(--font-base);
 }
+
 
 h1, h2, h3 {
   font-weight: 700;
@@ -77,7 +83,6 @@ h1, h2, h3 {
   }
 }
 
-// ----------- Tabla -----------
 .table {
   background-color: white;
   border-radius: 15px;
@@ -97,7 +102,6 @@ h1, h2, h3 {
   }
 }
 
-// ----------- Inputs y forms -----------
 input, select {
   border-radius: 20px;
   padding: 10px 15px;
@@ -119,7 +123,6 @@ input, select {
   margin: auto;
 }
 
-// ----------- Mobile First: tabla como cards -----------
 .table-responsive {
   display: block;
   width: 100%;
@@ -129,7 +132,7 @@ input, select {
   }
 
   thead {
-    display: none; // ocultamos headers en mobile
+    display: none; 
   }
 
   tr {
@@ -162,7 +165,6 @@ input, select {
   }
 }
 
-// ----------- Desktop -----------
 @media (min-width: 768px) {
   .table-responsive {
     table {
