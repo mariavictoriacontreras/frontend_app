@@ -40,9 +40,9 @@ const Navbar = () => {
     </li>
   </ul>
 
-  <a href="/login" className="btn-ingresar ms-auto">
-    Ingresar 
-  </a>
+    <a href="/login" className="btn-ingresar ms-auto">
+      Ingresar 
+    </a>
 </div>
 
         </div>
