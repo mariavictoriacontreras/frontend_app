@@ -1,5 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { register, login } from "../../services/AuthService";
+
 import "./authform.scss";
 
 type Props = {
@@ -14,7 +16,7 @@ export default function AuthForm({ activeTab = "login" }: Props) {
     location.pathname.includes("register") ? "register" : activeTab;
 
   const [tab, setTab] = useState<"login" | "register">(initialTab);
-
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     nombreApellido: "",
     email: "",
@@ -28,12 +30,26 @@ export default function AuthForm({ activeTab = "login" }: Props) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (tab === "login") {
-      console.log("Login:", form.email, form.password);
-    } else {
-      console.log("Registro:", form);
+    setError("");
+
+    try {
+      if (tab === "login") {
+        const res = await login({
+          email: form.email,
+          password: form.password,
+        });
+
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        navigate("/home"); 
+      } else {
+        await register(form);
+        navigate("/login");
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Error al procesar la solicitud");
     }
   };
 
@@ -118,6 +134,8 @@ export default function AuthForm({ activeTab = "login" }: Props) {
           required
         />
 
+        {error && <p className="error-msg">{error}</p>}
+
         <button type="submit" className="btn-primary btn-lg-rounded w-100">
           {tab === "login" ? "Ingresar" : "Registrarse"}
         </button>
@@ -125,3 +143,8 @@ export default function AuthForm({ activeTab = "login" }: Props) {
     </div>
   );
 }
+
+export const logout = () => {
+  localStorage.removeItem("token");
+  window.location.href = "/login"; 
+};

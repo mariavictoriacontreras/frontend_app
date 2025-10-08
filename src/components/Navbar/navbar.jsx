@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./navbar.scss";
 import logo from "../../assets/logo.png"; 
+import { logout } from "../../services/AuthService";
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token); // true si hay token
+  }, []);
+
   return (
     <header className="navbar-container">
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <a className="navbar-brand d-flex align-items-center" href="/">
             <img src={logo} alt="Logo Mascoticas" className="logo" />
-            {/* <span className="brand-text">Mascoticas</span> */}
           </a>
 
           <button
@@ -24,27 +31,32 @@ const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-<div className="collapse navbar-collapse" id="navbarNav">
-  <ul className="navbar-nav mx-auto">
-    <li className="nav-item">
-      <a className="nav-link active" href="/">Inicio</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="/adoptar">Adoptar</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="/transitos">Tránsitos</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="/donar">Donar</a>
-    </li>
-  </ul>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav mx-auto">
+              <li className="nav-item">
+                <a className="nav-link active" href="/">Inicio</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/adoptar">Adoptar</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/transitos">Tránsitos</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/donar">Donar</a>
+              </li>
+            </ul>
 
-    <a href="/login" className="btn-ingresar ms-auto">
-      Ingresar 
-    </a>
-</div>
-
+            {isLoggedIn ? (
+              <a onClick={logout} className="btn-ingresar ms-auto">
+                Salir
+              </a>
+            ) : (
+              <a href="/login" className="btn-ingresar ms-auto">
+                Ingresar
+              </a>
+            )}
+          </div>
         </div>
       </nav>
     </header>
