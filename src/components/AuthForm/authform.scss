@@ -1,6 +1,5 @@
-$primary-color: #ff6f47; 
-$secondary-color: #fefcf7; 
-$text-color: #333;
+@import '../../styles/theme';
+
 
 .auth-container {
   max-width: 400px;
@@ -43,7 +42,7 @@ $text-color: #333;
     padding: 0.8rem 1rem;
     border-radius: 12px;
     border: 1px solid #ddd;
-    background: #f2f0ec;
+    background: $bg-color;
     outline: none;
     transition: border 0.2s;
 
@@ -54,7 +53,7 @@ $text-color: #333;
 
   .btn-primary {
     background: $primary-color;
-    color: white;
+    color: $light-color;
     font-weight: bold;
     border: none;
     padding: 0.9rem;
@@ -65,4 +64,37 @@ $text-color: #333;
       background: darken($primary-color, 8%);
     }
   }
+
+  .error-msg {
+    color: $danger;
+    font-size: 0.9rem;
+    text-align: center;
+  }
 }
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .form-input {
+    width: 100%;
+    padding-right: 2.5rem; // deja espacio para el ícono
+  }
+
+  i {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: $primary-color; 
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+
+    // &:hover {
+    //   transform: scale(1.1);
+    // }
+  }
+}
+

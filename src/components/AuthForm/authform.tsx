@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { register, login } from "../../services/AuthService";
-
 import "./authform.scss";
 
 type Props = {
@@ -17,6 +16,8 @@ export default function AuthForm({ activeTab = "login" }: Props) {
 
   const [tab, setTab] = useState<"login" | "register">(initialTab);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(""); 
+  const [hidePassword, setHidePassword] = useState(true);
   const [form, setForm] = useState({
     nombreApellido: "",
     email: "",
@@ -33,6 +34,7 @@ export default function AuthForm({ activeTab = "login" }: Props) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     try {
       if (tab === "login") {
@@ -43,10 +45,11 @@ export default function AuthForm({ activeTab = "login" }: Props) {
 
         const token = res.data.token;
         localStorage.setItem("token", token);
-        navigate("/home"); 
+        navigate("/home");
       } else {
         await register(form);
-        navigate("/login");
+        setSuccess("¡Registro exitoso! Redirigiendo...");
+        setTimeout(() => navigate("/home"), 1500);
       }
     } catch (err: any) {
       setError(err.response?.data?.message || "Error al procesar la solicitud");
@@ -124,17 +127,25 @@ export default function AuthForm({ activeTab = "login" }: Props) {
           className="form-input"
           required
         />
-        <input
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          value={form.password}
-          onChange={handleChange}
-          className="form-input"
-          required
-        />
+
+        <div className="password-wrapper">
+          <input
+            type={hidePassword ? "password" : "text"}
+            name="password"
+            placeholder="Contraseña"
+            value={form.password}
+            onChange={handleChange}
+            className="form-input"
+            required
+          />
+          <i
+            className={`bi ${hidePassword ? "bi-eye-slash" : "bi-eye"}`}
+            onClick={() => setHidePassword(!hidePassword)}
+          ></i>
+        </div>
 
         {error && <p className="error-msg">{error}</p>}
+        {success && <p className="success-msg">{success}</p>}
 
         <button type="submit" className="btn-primary btn-lg-rounded w-100">
           {tab === "login" ? "Ingresar" : "Registrarse"}
@@ -146,5 +157,5 @@ export default function AuthForm({ activeTab = "login" }: Props) {
 
 export const logout = () => {
   localStorage.removeItem("token");
-  window.location.href = "/login"; 
+  window.location.href = "/login";
 };

@@ -8,7 +8,8 @@ const Navbar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); // true si hay token
+    setIsLoggedIn(!!token); 
+    console.log('setIsLoggedIn',setIsLoggedIn);
   }, []);
 
   return (
@@ -56,6 +57,7 @@ const Navbar = () => {
                 Ingresar
               </a>
             )}
+
           </div>
         </div>
       </nav>

@@ -1,5 +1,7 @@
+@import '../../styles/theme';
+
 .footer-container {
-  background-color: #fdfcf7;
+  background-color: $bg-color;
   padding: 2rem 1rem;
   border-top: 1px solid #eee;
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
@@ -13,7 +15,7 @@
 
       p {
         font-size: 0.9rem;
-        color: #555;
+        color: $text-color;
       }
 
       .social-icons {
@@ -22,10 +24,10 @@
         a {
           margin-right: 10px;
           font-size: 1.2rem;
-          color: #555;
+          color: $text-color;
 
           &:hover {
-            color: #e6533c;
+            color: $primary-color;
           }
         }
       }
@@ -47,10 +49,10 @@
         a {
           text-decoration: none;
           font-size: 0.9rem;
-          color: #444;
+          color: $text-color;
 
           &:hover {
-            color: #e6533c;
+            color: $primary-color;
           }
         }
       }
