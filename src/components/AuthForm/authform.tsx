@@ -1,10 +1,16 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { register, login } from "../../services/AuthService";
+import axios from "axios";
 import "./authform.scss";
 
 type Props = {
   activeTab?: "login" | "register";
+};
+
+type Role = {
+  idRol: number;
+  nombre: string;
 };
 
 export default function AuthForm({ activeTab = "login" }: Props) {
@@ -16,18 +22,32 @@ export default function AuthForm({ activeTab = "login" }: Props) {
 
   const [tab, setTab] = useState<"login" | "register">(initialTab);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(""); 
+  const [success, setSuccess] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
+
+  const [roles, setRoles] = useState<Role[]>([]);
+
   const [form, setForm] = useState({
     nombreApellido: "",
     email: "",
     direccion: "",
     telefono: "",
-    rol: "",
+    tipoDocumento: "",
+    nroDocumento: "",
+    rol: "", 
     password: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/roles") // TODO: deberíamos ver si hay forma de manejarlo de forma dinamica
+      .then((res) => setRoles(res.data))
+      .catch((err) => console.error("Error al obtener roles:", err));
+  }, []);
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -109,12 +129,38 @@ export default function AuthForm({ activeTab = "login" }: Props) {
             />
             <input
               type="text"
-              name="rol"
-              placeholder="Rol"
-              value={form.rol}
+              name="tipoDocumento"
+              placeholder="Tipo de Documento (DNI, Pasaporte, etc.)"
+              value={form.tipoDocumento}
               onChange={handleChange}
               className="form-input"
+              required
             />
+            <input
+              type="text"
+              name="nroDocumento"
+              placeholder="Número de Documento"
+              value={form.nroDocumento}
+              onChange={handleChange}
+              className="form-input"
+              required
+            />
+
+          <select
+            name="rol"
+            value={form.rol}
+            onChange={handleChange}
+            className="form-input"
+            required
+          >
+            <option value="">Seleccionar rol</option>
+            {roles.map((role) => (
+              <option key={role.idRol} value={role.idRol}>
+                {role.nombre}
+              </option>
+            ))}
+          </select>
+
           </>
         )}
 
