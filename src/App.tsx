@@ -4,6 +4,7 @@ import Footer from "./components/Footer/footer.jsx";
 import AuthForm from "./components/AuthForm/authform.js"; // nuestro login/register
 import UserList from "./pages/UserList";
 import UserForm from "./pages/UserForm";
+import LandingPage from "./pages/LandingPage.js";
 import './styles/theme.scss';
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
     <Navbar />
 
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<AuthForm activeTab="login" />} />
         <Route path="/register" element={<AuthForm activeTab="register" />} />
         <Route path="/users" element={<UserList />} />
