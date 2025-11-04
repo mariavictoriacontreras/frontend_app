@@ -1,7 +1,7 @@
 export interface Pet {
-  iPet: number;
+  idPet: number;
   name: string;
-  birthday: Date;
+  birthday?: string | Date;
   description: string;
   user: string;
   specie: string;
