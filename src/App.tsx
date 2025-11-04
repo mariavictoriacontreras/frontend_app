@@ -5,6 +5,7 @@ import AuthForm from "./components/AuthForm/authform.js"; // nuestro login/regis
 import UserList from "./pages/UserList";
 import UserForm from "./pages/UserForm";
 import './styles/theme.scss';
+import AdoptionList from "./components/Adoption/adoptionlist";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/users" element={<UserList />} />
         <Route path="/users/new" element={<UserForm />} />
         <Route path="/users/edit/:id" element={<UserForm />} />
+        <Route path="/pets" element={<AdoptionList />} />
       </Routes>
 
       <Footer />

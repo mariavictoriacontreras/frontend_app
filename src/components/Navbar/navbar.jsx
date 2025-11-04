@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./navbar.scss";
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png"; 
 import { logout } from "../../services/AuthService";
 
@@ -38,7 +39,7 @@ const Navbar = () => {
                 <a className="nav-link active" href="/">Inicio</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/adoptar">Adoptar</a>
+                <Link className="nav-link" to="/pets">Adoptar</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/transitos">Tránsitos</a>
