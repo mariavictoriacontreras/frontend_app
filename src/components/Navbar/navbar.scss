@@ -1,0 +1,50 @@
+@import '../../styles/theme';
+
+.navbar-container {
+  background-color: $bg-color;
+  padding: 0.5rem 1rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+
+  .navbar-brand {
+    display: flex;
+    align-items: start;
+
+    .logo {
+      width: 100px;
+      margin-right: 150px;
+    }
+  }
+
+  .navbar-nav {
+    .nav-link {
+      font-size: 0.95rem;
+      margin: 0 8px;
+      color: $text-color;
+
+      &.active {
+        color: $primary-color;
+        border-bottom: 2px solid $primary-color ;
+      }
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+  .btn-ingresar {
+    border: 1px solid $primary-color;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: 0.85rem;
+    color: $primary-color;
+    text-decoration: none;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: $primary-color;
+      color: $light-color;
+    }
+  }
+}
