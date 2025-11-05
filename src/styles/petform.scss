@@ -1,0 +1,22 @@
+.pet-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+  label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  input, textarea {
+    border-radius: 0.5rem;
+  }
+
+  button {
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+  }
+}

@@ -6,6 +6,8 @@ import UserList from "./pages/UserList";
 import UserForm from "./pages/UserForm";
 import LandingPage from "./pages/LandingPage.js";
 import './styles/theme.scss';
+import AdoptionList from "./components/Adoption/adoptionlist";
+import PetForm from "./pages/PetForm";
 
 export default function App() {
   return (
@@ -20,6 +22,9 @@ export default function App() {
         <Route path="/users" element={<UserList />} />
         <Route path="/users/new" element={<UserForm />} />
         <Route path="/users/edit/:id" element={<UserForm />} />
+        <Route path="/pets" element={<AdoptionList />} />
+        <Route path="/pets/new" element={<PetForm />} />
+        <Route path="/pets/edit/:idPet" element={<PetForm />} />
       </Routes>
 
       <Footer />
