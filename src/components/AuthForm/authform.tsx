@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { register, login } from "../../services/AuthService";
-import axios from "axios";
+import { getRoles } from "../../services/RoleService"; 
 import "./authform.scss";
 
 type Props = {
@@ -38,9 +38,8 @@ export default function AuthForm({ activeTab = "login" }: Props) {
     password: "",
   });
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/roles") // TODO: deberíamos ver si hay forma de manejarlo de forma dinamica
+    useEffect(() => {
+    getRoles()
       .then((res) => setRoles(res.data))
       .catch((err) => console.error("Error al obtener roles:", err));
   }, []);
