@@ -64,8 +64,8 @@ export default function PetList() {
                 <td>{p.name}</td>
                 <td>{p.birthday ? new Date(p.birthday).toLocaleDateString() : "—"}</td>
                 <td>{p.description}</td>
-                <td>{p.user}</td>
-                <td>{p.specie}</td>
+                <td>{p.user?.nombreApellido || "—"}</td>
+                <td>{p.specie?.description || "—"}</td>
                 <td>
                   <div className="d-flex flex-wrap gap-2">
                     <button

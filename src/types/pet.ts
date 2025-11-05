@@ -3,6 +3,12 @@ export interface Pet {
   name: string;
   birthday?: string | Date;
   description: string;
-  user: string;
-  specie: string;
+  user: {
+    idUsuario: number;
+    nombreApellido: string;
+  };
+  specie: {
+    idSpecie: number;
+    description: string;
+  };
 }

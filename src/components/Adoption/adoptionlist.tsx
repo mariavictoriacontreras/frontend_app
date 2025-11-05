@@ -52,7 +52,7 @@ export default function AdoptionList() {
             <div key={pet.idPet} className="pet-card">
               <div className="pet-info">
                 <h3>{pet.name}</h3>
-                <p> {pet.specie}</p>
+                <p> {pet.specie.description}</p>
                 <p><strong>Descripción:</strong> {pet.description}</p>
                 {pet.birthday && (
                   <p><strong>Nacimiento:</strong> {new Date(pet.birthday).toLocaleDateString()}</p>
