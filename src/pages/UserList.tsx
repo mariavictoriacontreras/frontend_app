@@ -72,7 +72,7 @@ export default function UserList() {
                 <td data-label="Email">{u.email}</td>
                 <td data-label="Dirección">{u.direccion}</td>
                 <td data-label="Teléfono">{u.telefono}</td>
-                <td data-label="Rol">{u.rol}</td>
+                <td data-label="Rol">{u.rol?.nombre || "—"}</td>
                 <td data-label="Acciones">
                   <div className="d-flex flex-wrap gap-2">
                     <button
