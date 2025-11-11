@@ -1,0 +1,47 @@
+@import '../../styles/theme';
+
+.refugios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.refugio-card {
+  background: $light-color;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  h3 {
+    color: $text-color;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+
+  p {
+    color: $text-color;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    min-height: 50px;
+  }
+
+  .btn {
+    margin-top: 10px;
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-weight: 600;
+  }
+
+  .text-muted {
+    color: #999;
+    font-size: 0.9rem;
+  }
+}
