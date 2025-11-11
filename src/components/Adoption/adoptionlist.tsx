@@ -50,6 +50,18 @@ export default function AdoptionList() {
         {pets.length > 0 ? (
           pets.map((pet) => (
             <div key={pet.idPet} className="pet-card">
+                <img
+                  src={
+                    pet.imageUrl
+                      ? `http://localhost:4000${pet.imageUrl}`
+                      : "/default-pet.png"
+                  }
+                  alt={pet.name}
+                  className="pet-img"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/default-pet.png";
+                  }}
+                />
               <div className="pet-info">
                 <h3>{pet.name}</h3>
                 <p> {pet.specie.description}</p>
