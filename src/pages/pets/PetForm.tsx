@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPetById, createPet, updatePet, uploadPetImage } from "../services/PetService";
-import { getUsers } from "../services/UserService";
-import { getSpecies } from "../services/SpecieService";
-import { User } from "../types/user";
-import { Specie } from "../types/specie";
-import { Pet, PetPayload } from "../types/pet";
-import "../styles/petform.scss";
+import { getPetById, createPet, updatePet, uploadPetImage } from "../../services/PetService";
+import { getUsers } from "../../services/UserService";
+import { getSpecies } from "../../services/SpecieService";
+import { User } from "../../types/user";
+import { Specie } from "../../types/specie";
+import { Pet, PetPayload } from "../../types/pet";
+import "../../styles/pet.scss";
 
 export default function PetForm() {
   const [pet, setPet] = useState<Omit<Pet, "idPet">>({

@@ -1,0 +1,65 @@
+import { Pet } from "../../types/pet";
+import { useNavigate } from "react-router-dom";
+
+interface PetCardProps {
+  pet: Pet;
+  onDelete: (id: number) => void;
+}
+
+export default function PetCard({ pet, onDelete }: PetCardProps) {
+  const navigate = useNavigate();
+
+  return (
+    <div
+      className="pet-card"
+      onClick={() => navigate(`/pets/${pet.idPet}`)}
+      style={{ cursor: "pointer" }}
+    >
+      <img
+        src={
+          pet.imageUrl
+            ? `http://localhost:4000${pet.imageUrl}`
+            : "/default-pet.png"
+        }
+        alt={pet.name}
+        className="pet-img"
+        onError={(e) => {
+          (e.target as HTMLImageElement).src = "/default-pet.png";
+        }}
+      />
+      <div className="pet-info">
+        <h3>{pet.name}</h3>
+        <p>{pet.specie?.description}</p>
+        <p>
+          <strong>Descripción:</strong> {pet.description}
+        </p>
+        {pet.birthday && (
+          <p>
+            <strong>Nacimiento:</strong>{" "}
+            {new Date(pet.birthday).toLocaleDateString()}
+          </p>
+        )}
+
+        <div className="pet-actions">
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // evita que se dispare el navigate
+              navigate(`/pets/edit/${pet.idPet}`);
+            }}
+          >
+            Editar
+          </button>
+          <button
+            className="btn-delete"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(pet.idPet);
+            }}
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

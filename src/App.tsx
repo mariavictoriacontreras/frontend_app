@@ -7,7 +7,8 @@ import UserForm from "./pages/UserForm";
 import LandingPage from "./pages/LandingPage.js";
 import './styles/theme.scss';
 import AdoptionList from "./components/Adoption/adoptionlist";
-import PetForm from "./pages/PetForm";
+import PetForm from "./pages/pets/PetForm.js";
+import PetDetail from "./pages/pets/PetDetail.js";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/pets" element={<AdoptionList />} />
         <Route path="/pets/new" element={<PetForm />} />
         <Route path="/pets/edit/:idPet" element={<PetForm />} />
+        <Route path="/pets/:idPet" element={<PetDetail />} />
       </Routes>
 
       <Footer />

@@ -1,17 +1,18 @@
 import axios from "axios";
-import { Pet } from "../types/pet";
+import { Pet, PetPayload } from "../types/pet";
 
-const API_URL = "http://localhost:4000/pets"; 
+const API_URL = "http://localhost:4000/pets";
 
 export const getPets = () => axios.get<Pet[]>(API_URL);
 
 export const getPetById = (idPet: number) =>
   axios.get<Pet>(`${API_URL}/${idPet}`);
 
-export const createPet = (petData: Omit<Pet, "idPet">) =>
+export const createPet = (petData: PetPayload) =>
   axios.post<Pet>(API_URL, petData);
 
-export const updatePet = (idPet: number, petData: Omit<Pet, "idPet">) =>
+// Si preferís enviar solo los campos actualizados en edit
+export const updatePet = (idPet: number, petData: Partial<PetPayload>) =>
   axios.put<Pet>(`${API_URL}/${idPet}`, petData);
 
 export const deletePet = (idPet: number) =>
@@ -19,7 +20,7 @@ export const deletePet = (idPet: number) =>
 
 export const uploadPetImage = async (file: File): Promise<string> => {
   const formData = new FormData();
-  formData.append("image", file); 
+  formData.append("image", file);
 
   const response = await axios.post(`${API_URL}/upload`, formData, {
     headers: {
@@ -27,6 +28,5 @@ export const uploadPetImage = async (file: File): Promise<string> => {
     },
   });
 
-  return response.data.imageUrl; 
+  return response.data.imageUrl;
 };
-
