@@ -3,7 +3,6 @@ import { AdoptionRequest } from "../types/adoptionRequest";
 
 const API_URL = "http://localhost:4000/adoptions";
 
-// 🎯 Tipado del formulario de adopción
 export interface AdoptionFormData {
   fullName?: string;
   address?: string;
@@ -34,7 +33,6 @@ export interface AdoptionFormData {
   canHavePets?: boolean | null;
 }
 
-// 🟢 Crear una solicitud de adopción
 export const createAdoptionRequest = async (
     
   petId: number,
@@ -65,16 +63,13 @@ export const createAdoptionRequest = async (
   }
 };
 
-// 🟣 Obtener solicitudes de adopción de un refugio
 export const getAdoptionRequestsByRefuge = () =>
   axios.get<AdoptionRequest[]>(`${API_URL}/refuge`, { withCredentials: true });
 
-// 🟡 Actualizar el estado de una solicitud
 export const updateAdoptionState = (id: number, state: string) =>
   axios.patch(`${API_URL}/${id}/state`, { state }, { withCredentials: true });
 
 
-// 🟢 Usuario ve sus solicitudes
 export const getUserAdoptionRequests = async () => {
   const token = localStorage.getItem('token')
   const res = await axios.get(`${API_URL}/user`, {
@@ -83,7 +78,6 @@ export const getUserAdoptionRequests = async () => {
   return res.data
 }
 
-// 🟣 Refugio ve solicitudes
 export const getRefugeAdoptionRequests = async () => {
   const token = localStorage.getItem('token')
   const res = await axios.get(`${API_URL}/refuge`, {

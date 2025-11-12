@@ -80,7 +80,6 @@ export default function AdoptionForm() {
     e.preventDefault();
 
     try {
-      // console.log("🐾 Enviando solicitud:", { petId: id, parsedId: Number(id), formData });
 
       await createAdoptionRequest(Number(id), formData);
       alert("Solicitud enviada con éxito ");
@@ -136,7 +135,6 @@ export default function AdoptionForm() {
           />
         </div>
 
-        {/* 🏡 Preguntas tipo sí/no */}
         <div>
           <label>¿Tiene patio?</label>
           <select name="hasYard" value={String(formData.hasYard)} onChange={handleChange}>
@@ -217,7 +215,6 @@ export default function AdoptionForm() {
           </select>
         </div>
 
-        {/* 🩺 Cuidados */}
         <div>
           <label>¿Se compromete a castrar?</label>
           <select
