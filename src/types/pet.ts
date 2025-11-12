@@ -3,6 +3,7 @@ export interface Pet {
   name: string;
   birthday?: string | Date;
   description: string;
+  imageUrl?: string; 
   user: {
     idUsuario: number;
     nombreApellido: string;
@@ -12,3 +13,12 @@ export interface Pet {
     description: string;
   };
 }
+
+export type PetPayload = {
+  name: string;
+  birthday: string;
+  description: string;
+  imageUrl?: string | null;
+  userId: number;
+  specieId: number;
+};
