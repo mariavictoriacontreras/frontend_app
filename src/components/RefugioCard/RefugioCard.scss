@@ -1,0 +1,22 @@
+@use '../../styles/main' as *;
+
+.refugio-card {
+  border-radius: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: $light-color;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .refugio-nombre {
+    color: $accent-color;
+    font-weight: 600;
+  }
+
+  .refugio-email {
+    color: $text-color;
+    font-size: 0.9rem;
+  }
+}
