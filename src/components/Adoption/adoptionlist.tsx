@@ -68,6 +68,11 @@ export default function AdoptionList() {
     }
   };
 
+  //user logued
+  const usuarioLogueado = JSON.parse(localStorage.getItem("usuario") || "null");
+  const esRefugio = usuarioLogueado?.rol === "refugio";
+  // console.log("user", usuarioLogueado);
+
   const handleDelete = async (idPet: number) => {
     if (confirm("¿Seguro que querés eliminar esta mascota?")) {
       try {
@@ -120,9 +125,11 @@ export default function AdoptionList() {
     <div className="adoption-list-container">
       <div className="header-section">
         <h1>Mascotas en adopción</h1>
+        {esRefugio && (
         <button className="btn-add-pet" onClick={() => navigate("/pets/new")}>
           + Nueva mascota
         </button>
+        )}
       </div>
 
       {/* Filtros */}
@@ -182,7 +189,7 @@ export default function AdoptionList() {
       <div className="pets-grid">
         {filteredPets.length > 0 ? (
           filteredPets.map((pet) => (
-            <PetCard key={pet.idPet} pet={pet} onDelete={handleDelete} />
+            <PetCard key={pet.idPet} pet={pet} onDelete={handleDelete} currentUser={usuarioLogueado} />
           ))
         ) : (
           <p>No hay mascotas disponibles 🐾</p>

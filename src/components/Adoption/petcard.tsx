@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 interface PetCardProps {
   pet: Pet;
   onDelete: (id: number) => void;
+  currentUser?: any; // el usuario logueado
 }
 
-export default function PetCard({ pet, onDelete }: PetCardProps) {
+export default function PetCard({ pet, onDelete, currentUser }: PetCardProps) {
   const navigate = useNavigate();
+
+    const rol = currentUser?.rol; // 
+    const isLogged = !!currentUser;
 
   return (
     <div
@@ -41,6 +45,9 @@ export default function PetCard({ pet, onDelete }: PetCardProps) {
         )}
 
         <div className="pet-actions">
+        {/* Si es admin (rol 2): puede editar/eliminar */}
+          {rol === "refugio" && (
+            <>
           <button
             onClick={(e) => {
               e.stopPropagation(); // evita que se dispare el navigate
@@ -58,6 +65,21 @@ export default function PetCard({ pet, onDelete }: PetCardProps) {
           >
             Eliminar
           </button>
+          </>
+          )}
+
+           {/* Si no está logueado o es rol 1: botón Adoptar */}
+          {(!isLogged || rol === "user") && (
+            <button
+              className="btn-adopt"
+              onClick={(e) => {
+                e.stopPropagation();
+                alert("🩵 Pronto podrás adoptar esta mascota!");
+              }}
+            >
+              Adoptar
+            </button>
+          )}
         </div>
       </div>
     </div>

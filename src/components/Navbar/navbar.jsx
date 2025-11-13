@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./navbar.scss";
-import { Link, useLocation } from "react-router-dom"; 
-import logo from "../../assets/logo.png";
-import { logout } from "../../services/AuthService";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png"; 
+import { useAuth } from "../../context/AuthContext"; // 🔹 Usamos el contexto
+
+const Navbar = () => {
+  const { user, logout } = useAuth(); // 🔹 Ahora el user y logout vienen del contexto
+  const navigate = useNavigate();
+
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const location = useLocation(); 
 
+  // Redirige si se desloguea
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
     const checkAuth = () => {
       const token = localStorage.getItem("token");
       const role = localStorage.getItem("rol");
@@ -101,10 +111,10 @@ const Navbar = () => {
               )}
             </ul>
 
-            {isLoggedIn ? (
-              <a onClick={logout} className="btn-ingresar ms-auto">
+            {user ? (
+              <button onClick={logout} className="btn-ingresar ms-auto">
                 Salir
-              </a>
+              </button>
             ) : (
               <Link to="/login" className="btn-ingresar ms-auto">
                 Ingresar
