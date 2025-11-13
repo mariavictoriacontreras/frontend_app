@@ -9,7 +9,8 @@ import RefugeAdoptionList from './components/AdoptionRequest/RefugeAdoptionList.
 import LandingPage from "./pages/LandingPage.js";
 import './styles/theme.scss';
 import AdoptionList from "./components/Adoption/adoptionlist";
-import PetForm from "./pages/PetForm";
+import PetForm from "./pages/pets/PetForm.js";
+import PetDetail from "./pages/pets/PetDetail.js";
 import AdoptionRequest from "./components/AdoptionRequest/AdoptionRequest.jsx";
 import AdoptionRequestDetail from "./components/AdoptionRequest/AdoptionRequestDetail.jsx";
 
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/pets" element={<AdoptionList />} />
         <Route path="/pets/new" element={<PetForm />} />
         <Route path="/pets/edit/:idPet" element={<PetForm />} />
+        <Route path="/pets/:idPet" element={<PetDetail />} />
         <Route path="/adopt/:id" element={<AdoptionRequest />} />
         <Route path="/my-requests" element={<UserAdoptionList />} />
         <Route path="/refuge/requests" element={<RefugeAdoptionList />} />
