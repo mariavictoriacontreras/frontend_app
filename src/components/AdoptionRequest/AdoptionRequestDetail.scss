@@ -1,0 +1,203 @@
+@import '../../styles/theme';
+
+.adoption-detail-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  background-color: white;
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  // 🔙 Botón volver
+  .btn-back {
+    background: none;
+    border: none;
+    color: $accent-color;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 1rem;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: darken($accent-color, 10%);
+      text-decoration: underline;
+    }
+  }
+
+  h1 {
+    color: $accent-color;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  h2 {
+    color: $accent-color;
+    margin-bottom: 0.5rem;
+  }
+
+  .pet-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .pet-image {
+      width: 50%;
+      max-width: 250px;
+      border-radius: 15px;
+      margin-bottom: 1rem;
+      object-fit: cover;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .pet-info {
+      text-align: center;
+
+      .pet-name {
+        font-size: 1.8rem;
+        color: $primary-color;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        margin: 0.3rem 0;
+        color: $text-color;
+
+        strong {
+          color: $accent-color;
+        }
+      }
+    }
+  }
+
+    // margin-bottom: 1.5rem;
+
+  p {
+    color: $text-color;
+    margin: 0.4rem 0;
+    font-size: 1rem;
+
+    strong {
+      color: $accent-color;
+    }
+  }
+
+  .state-tag {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-weight: 600;
+    text-transform: capitalize;
+
+    &.pending {
+      background-color: #fff9c1;
+      color: #c2a222be;
+    }
+    &.approved {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    &.rejected {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+   }
+
+  .form-answers {
+    background-color: $secondary-bg;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: inset 0px 2px 6px rgba(0, 0, 0, 0.05);
+
+    h3 {
+      color: $accent-color;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 0.6rem;
+        font-size: 1rem;
+        color: $text-color;
+
+        strong {
+          color: $primary-color;
+        }
+      }
+    }
+
+    hr {
+      margin: 1.5rem 0;
+      border: 0;
+      height: 1px;
+      background-color: #ddd;
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    button {
+      min-width: 130px;
+      font-weight: 500;
+    }
+
+    // ⚙️ Alinear texto y botón si ya fue actualizada
+    .already-updated {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      text-align: center;
+
+      p {
+        margin: 0;
+        color: $text-color;
+        font-size: 1rem;
+      }
+
+      button {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
+
+// 📱 Responsive
+@media (max-width: 600px) {
+  .adoption-detail-container {
+    padding: 1.5rem;
+
+    .pet-section {
+      .pet-image {
+        width: 70%;
+        max-width: 200px;
+      }
+    }
+
+    .form-answers {
+      padding: 1rem;
+    }
+
+    .actions {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

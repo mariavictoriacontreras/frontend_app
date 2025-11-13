@@ -33,55 +33,82 @@ export interface AdoptionFormData {
   canHavePets?: boolean | null;
 }
 
+
 export const createAdoptionRequest = async (
-    
   petId: number,
   formData: AdoptionFormData
 ) => {
-  // 🔍 Mostrar lo que se enviará al backend
-//   console.log(" Enviando solicitud de adopción al backend...");
-//   console.log(" petId:", petId);
-//   console.log(" formData:", formData);
-    const token = localStorage.getItem("token"); //  obtiene el token guardado
-//   console.log(" token:", token ? "✅ encontrado" : " no hay token");
+  const token = localStorage.getItem("token");
+
   try {
     const response = await axios.post(
       API_URL,
       { petId, formData },
-        {
-      headers: {
-        Authorization: `Bearer ${token}`, // <-- esto manda el token al backend
-      },
-      withCredentials: true, // si también necesitás cookies
-    }
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
     );
-    // console.log("Respuesta del backend:", response.data);
     return response.data;
   } catch (error: any) {
-    console.error("Error al enviar al backend:", error.response || error);
+    console.error(" Error al enviar la solicitud:", error.response || error);
     throw error;
   }
 };
 
-export const getAdoptionRequestsByRefuge = () =>
-  axios.get<AdoptionRequest[]>(`${API_URL}/refuge`, { withCredentials: true });
 
-export const updateAdoptionState = (id: number, state: string) =>
-  axios.patch(`${API_URL}/${id}/state`, { state }, { withCredentials: true });
+export const getRefugeAdoptionRequests = async () => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.get(`${API_URL}/refuge`, {
+    headers: { Authorization: `Bearer ${token}` },
+    withCredentials: true,
+  });
+
+  return res.data;
+};
 
 
 export const getUserAdoptionRequests = async () => {
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
+
   const res = await axios.get(`${API_URL}/user`, {
     headers: { Authorization: `Bearer ${token}` },
-  })
-  return res.data
-}
+    withCredentials: true,
+  });
 
-export const getRefugeAdoptionRequests = async () => {
-  const token = localStorage.getItem('token')
-  const res = await axios.get(`${API_URL}/refuge`, {
+  return res.data;
+};
+
+
+export const getAdoptionRequestById = async (id: number) => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.get(`${API_URL}/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
-  })
-  return res.data
-}
+    withCredentials: true,
+  });
+
+  return res.data;
+};
+
+
+export const updateAdoptionRequestState = async (
+  id: number,
+  state: string
+) => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.patch(
+    `${API_URL}/${id}/state`,
+    { state },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true,
+    }
+  );
+
+  return res.data;
+};
