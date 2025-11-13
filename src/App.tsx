@@ -12,6 +12,7 @@ import AdoptionList from "./components/Adoption/adoptionlist";
 import PetForm from "./pages/pets/PetForm.js";
 import PetDetail from "./pages/pets/PetDetail.js";
 import AdoptionRequest from "./components/AdoptionRequest/AdoptionRequest.jsx";
+import AdoptionRequestDetail from "./components/AdoptionRequest/AdoptionRequestDetail.jsx";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<LandingPage />} />
         <Route path="/login" element={<AuthForm activeTab="login" />} />
         <Route path="/register" element={<AuthForm activeTab="register" />} />
         <Route path="/users" element={<UserList />} />
@@ -33,6 +35,7 @@ export default function App() {
         <Route path="/adopt/:id" element={<AdoptionRequest />} />
         <Route path="/my-requests" element={<UserAdoptionList />} />
         <Route path="/refuge/requests" element={<RefugeAdoptionList />} />
+          <Route path="/solicitudes/:id" element={<AdoptionRequestDetail />} />
       </Routes>
 
       <Footer />

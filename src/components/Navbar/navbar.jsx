@@ -1,36 +1,34 @@
 import React, { useState, useEffect } from "react";
 import "./navbar.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom"; 
 import logo from "../../assets/logo.png";
 import { logout } from "../../services/AuthService";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  const location = useLocation(); 
 
-useEffect(() => {
-  const checkAuth = () => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("rol");
-    setIsLoggedIn(!!token);
-    console.log('el token es', token)
-    setUserRole(role);
-  };
-
-  checkAuth(); 
-
-  window.addEventListener("storage", checkAuth);
-
-  return () => window.removeEventListener("storage", checkAuth);
-}, );
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      const role = localStorage.getItem("rol");
+      console.log('el rol es',role);
+      setIsLoggedIn(!!token);
+      setUserRole(role);
+    };
+    checkAuth();
+    window.addEventListener("storage", checkAuth);
+    return () => window.removeEventListener("storage", checkAuth);
+  }, []);
 
   return (
     <header className="navbar-container">
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
-          <a className="navbar-brand d-flex align-items-center" href="/">
+          <Link className="navbar-brand d-flex align-items-center" to="/">
             <img src={logo} alt="Logo Mascoticas" className="logo" />
-          </a>
+          </Link>
 
           <button
             className="navbar-toggler"
@@ -47,26 +45,55 @@ useEffect(() => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <a className="nav-link active" href="/">Inicio</a>
+                <Link
+                  className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
+                  to="/"
+                >
+                  Inicio
+                </Link>
               </li>
+
               <li className="nav-item">
-                <Link className="nav-link" to="/pets">Adoptar</Link>
+                <Link
+                  className={`nav-link ${location.pathname.startsWith("/pets") ? "active" : ""}`}
+                  to="/pets"
+                >
+                  Adoptar
+                </Link>
               </li>
+
               <li className="nav-item">
-                <a className="nav-link" href="/transitos">Tránsitos</a>
+                <Link
+                  className={`nav-link ${location.pathname.startsWith("/transitos") ? "active" : ""}`}
+                  to="/transitos"
+                >
+                  Tránsitos
+                </Link>
               </li>
+
               <li className="nav-item">
-                <a className="nav-link" href="/donar">Donar</a>
+                <Link
+                  className={`nav-link ${location.pathname.startsWith("/donar") ? "active" : ""}`}
+                  to="/donar"
+                >
+                  Donar
+                </Link>
               </li>
 
               {isLoggedIn && (
                 <li className="nav-item">
                   {userRole === "refugio" ? (
-                    <Link className="nav-link" to="/refuge/requests">
+                    <Link
+                      className={`nav-link ${location.pathname.startsWith("/refuge/requests") ? "active" : ""}`}
+                      to="/refuge/requests"
+                    >
                       Mis solicitudes
                     </Link>
                   ) : (
-                    <Link className="nav-link" to="/my-requests">
+                    <Link
+                      className={`nav-link ${location.pathname.startsWith("/my-requests") ? "active" : ""}`}
+                      to="/my-requests"
+                    >
                       Mis solicitudes
                     </Link>
                   )}
@@ -79,9 +106,9 @@ useEffect(() => {
                 Salir
               </a>
             ) : (
-              <a href="/login" className="btn-ingresar ms-auto">
+              <Link to="/login" className="btn-ingresar ms-auto">
                 Ingresar
-              </a>
+              </Link>
             )}
           </div>
         </div>
