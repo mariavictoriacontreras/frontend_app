@@ -47,6 +47,7 @@ export default function PetList() {
               {[
                 "ID",
                 "Nombre",
+                "Imagen",
                 "Fecha de Nacimiento",
                 "Descripción",
                 "Usuario",
@@ -61,6 +62,24 @@ export default function PetList() {
             {pets.map((p, idx) => (
               <tr key={p.idPet} className={idx % 2 === 0 ? "" : "table-light"}>
                 <td>{p.idPet}</td>
+                <td>
+                  {p.imageUrl ? (
+                    <img
+                      src={`http://localhost:4000${p.imageUrl}`}
+                      alt={p.name}
+                      style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 8 }}
+                      loading="lazy"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src =
+                          "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='100%25' height='100%25' fill='%23EEE'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='10'%3ENo+img%3C/text%3E%3C/svg%3E";
+                      }}
+                    />
+                  ) : (
+                    <div style={{ width: 64, height: 64, background: "#f1f1f1", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", color: "#999", fontSize: 12 }}>
+                      — 
+                    </div>
+                  )}
+                </td>
                 <td>{p.name}</td>
                 <td>{p.birthday ? new Date(p.birthday).toLocaleDateString() : "—"}</td>
                 <td>{p.description}</td>

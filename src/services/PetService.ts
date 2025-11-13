@@ -16,3 +16,17 @@ export const updatePet = (idPet: number, petData: Omit<Pet, "idPet">) =>
 
 export const deletePet = (idPet: number) =>
   axios.delete(`${API_URL}/${idPet}`);
+
+export const uploadPetImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("image", file); 
+
+  const response = await axios.post(`${API_URL}/upload`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data.imageUrl; 
+};
+
