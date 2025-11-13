@@ -65,11 +65,11 @@ export default function AuthForm({ activeTab = "login" }: Props) {
 
         const token = res.data.token;
         localStorage.setItem("token", token);
-        navigate("/home");
+        navigate("/");
       } else {
         await register(form);
         setSuccess("¡Registro exitoso! Redirigiendo...");
-        setTimeout(() => navigate("/home"), 1500);
+        setTimeout(() => navigate("/"), 1500);
       }
     } catch (err: any) {
       setError(err.response?.data?.message || "Error al procesar la solicitud");
