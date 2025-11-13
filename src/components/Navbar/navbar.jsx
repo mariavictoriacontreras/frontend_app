@@ -8,12 +8,29 @@ const Navbar = () => {
   const { user, logout } = useAuth(); // 🔹 Ahora el user y logout vienen del contexto
   const navigate = useNavigate();
 
+
+const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+  const location = useLocation(); 
+
   // Redirige si se desloguea
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
   }, [user, navigate]);
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      const role = localStorage.getItem("rol");
+      console.log('el rol es',role);
+      setIsLoggedIn(!!token);
+      setUserRole(role);
+    };
+    checkAuth();
+    window.addEventListener("storage", checkAuth);
+    return () => window.removeEventListener("storage", checkAuth);
+  }, []);
 
   return (
     <header className="navbar-container">
@@ -38,17 +55,60 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <Link className="nav-link active" to="/">Inicio</Link>
+                <Link
+                  className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
+                  to="/"
+                >
+                  Inicio
+                </Link>
               </li>
+
               <li className="nav-item">
-                <Link className="nav-link" to="/pets">Adoptar</Link>
+                <Link
+                  className={`nav-link ${location.pathname.startsWith("/pets") ? "active" : ""}`}
+                  to="/pets"
+                >
+                  Adoptar
+                </Link>
               </li>
+
               <li className="nav-item">
-                <Link className="nav-link" to="/transitos">Tránsitos</Link>
+                <Link
+                  className={`nav-link ${location.pathname.startsWith("/transitos") ? "active" : ""}`}
+                  to="/transitos"
+                >
+                  Tránsitos
+                </Link>
               </li>
+
               <li className="nav-item">
-                <Link className="nav-link" to="/donar">Donar</Link>
+                <Link
+                  className={`nav-link ${location.pathname.startsWith("/donar") ? "active" : ""}`}
+                  to="/donar"
+                >
+                  Donar
+                </Link>
               </li>
+
+              {isLoggedIn && (
+                <li className="nav-item">
+                  {userRole === "refugio" ? (
+                    <Link
+                      className={`nav-link ${location.pathname.startsWith("/refuge/requests") ? "active" : ""}`}
+                      to="/refuge/requests"
+                    >
+                      Mis solicitudes
+                    </Link>
+                  ) : (
+                    <Link
+                      className={`nav-link ${location.pathname.startsWith("/my-requests") ? "active" : ""}`}
+                      to="/my-requests"
+                    >
+                      Mis solicitudes
+                    </Link>
+                  )}
+                </li>
+              )}
             </ul>
 
             {user ? (
