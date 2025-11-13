@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 import { getRefugeAdoptionRequests } from "../../services/AdoptionRequestService";
 import "./AdoptionRequestList.scss";
 
@@ -6,12 +8,13 @@ interface AdoptionRequest {
   idRequest: number;
   state: string;
   user: { nombreApellido: string };
-  pet: { name: string; photo?: string };
+  pet: { name: string; imageUrl?: string };
 }
 
 export default function RefugeAdoptionList() {
   const [requests, setRequests] = useState<AdoptionRequest[]>([]);
   const [loading, setLoading] = useState(true);
+   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -40,9 +43,21 @@ export default function RefugeAdoptionList() {
           {requests.map((r) => (
             <div className="request-card" key={r.idRequest}>
               <div className="pet-photo">
-                <img
+                {/* <img
                   src={r.pet.photo || "/img/default-pet.jpg"}
                   alt={r.pet.name}
+                /> */}
+                <img
+                  src={
+                    r.pet.imageUrl
+                      ? `http://localhost:4000${r.pet.imageUrl}`
+                      : "/default-pet.png"
+                  }
+                  alt={r.pet.name}
+                  className="pet-img"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/default-pet.png";
+                  }}
                 />
               </div>
 
@@ -65,9 +80,13 @@ export default function RefugeAdoptionList() {
                     {r.state}
                   </span>
                 </p>
-                <button className="btn-primary btn-sm-rounded">
-                  Ver más
-                </button>
+                            <button
+          onClick={() => navigate(`/solicitudes/${r.idRequest}`)}
+          className="btn-primary btn-lg-rounded"
+        >
+          Ver solicitud
+        </button>
+
               </div>
             </div>
           ))}
