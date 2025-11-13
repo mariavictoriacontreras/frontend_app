@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./navbar.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png"; 
-import { logout } from "../../services/AuthService";
+import { useAuth } from "../../context/AuthContext"; // 🔹 Usamos el contexto
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, logout } = useAuth(); // 🔹 Ahora el user y logout vienen del contexto
+  const navigate = useNavigate();
 
+  // Redirige si se desloguea
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); 
-    console.log('setIsLoggedIn',setIsLoggedIn);
-  }, []);
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   return (
     <header className="navbar-container">
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
-          <a className="navbar-brand d-flex align-items-center" href="/">
+          <Link className="navbar-brand d-flex align-items-center" to="/">
             <img src={logo} alt="Logo Mascoticas" className="logo" />
-          </a>
+          </Link>
 
           <button
             className="navbar-toggler"
@@ -36,29 +38,28 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <a className="nav-link active" href="/">Inicio</a>
+                <Link className="nav-link active" to="/">Inicio</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/pets">Adoptar</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/transitos">Tránsitos</a>
+                <Link className="nav-link" to="/transitos">Tránsitos</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/donar">Donar</a>
+                <Link className="nav-link" to="/donar">Donar</Link>
               </li>
             </ul>
 
-            {isLoggedIn ? (
-              <a onClick={logout} className="btn-ingresar ms-auto">
+            {user ? (
+              <button onClick={logout} className="btn-ingresar ms-auto">
                 Salir
-              </a>
+              </button>
             ) : (
-              <a href="/login" className="btn-ingresar ms-auto">
+              <Link to="/login" className="btn-ingresar ms-auto">
                 Ingresar
-              </a>
+              </Link>
             )}
-
           </div>
         </div>
       </nav>

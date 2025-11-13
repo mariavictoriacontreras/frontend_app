@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { register, login } from "../../services/AuthService";
 import { getRoles } from "../../services/RoleService"; 
+import { useAuth } from "../../context/AuthContext";
 import "./authform.scss";
 
 type Props = {
@@ -16,6 +17,7 @@ type Role = {
 export default function AuthForm({ activeTab = "login" }: Props) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const initialTab =
     location.pathname.includes("register") ? "register" : activeTab;
@@ -57,15 +59,23 @@ export default function AuthForm({ activeTab = "login" }: Props) {
 
     try {
       if (tab === "login") {
-        const res = await login({
-          email: form.email,
-          password: form.password,
-        });
+  const res = await login({
+    email: form.email,
+    password: form.password,
+  });
 
-        const token = res.data.token;
-        localStorage.setItem("token", token);
-        navigate("/home");
-      } else {
+  const { token, usuario } = res.data;
+
+  // Guarda el token y usuario
+  localStorage.setItem("token", token);
+  localStorage.setItem("usuario", JSON.stringify(usuario));
+
+  // 🔹 Actualiza el contexto global
+  setUser(usuario);
+
+  navigate("/pets");
+  // console.log("Usuario logueado:", usuario);
+} else {
         await register(form);
         setSuccess("¡Registro exitoso! Redirigiendo...");
         setTimeout(() => navigate("/home"), 1500);
@@ -199,8 +209,3 @@ export default function AuthForm({ activeTab = "login" }: Props) {
     </div>
   );
 }
-
-export const logout = () => {
-  localStorage.removeItem("token");
-  window.location.href = "/login";
-};
