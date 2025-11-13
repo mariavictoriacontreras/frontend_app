@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPetById, createPet, updatePet } from "../services/PetService";
-import { getUsers } from "../services/UserService";
-import { getSpecies } from "../services/SpecieService";
-import { User } from "../types/user";
-import { Specie } from "../types/specie";
-import { Pet } from "../types/pet";
-import "../styles/petform.scss";
+import { getPetById, createPet, updatePet, uploadPetImage } from "../../services/PetService";
+import { getUsers } from "../../services/UserService";
+import { getSpecies } from "../../services/SpecieService";
+import { User } from "../../types/user";
+import { Specie } from "../../types/specie";
+import { Pet, PetPayload } from "../../types/pet";
+import "../../styles/pet.scss";
 
 export default function PetForm() {
   const [pet, setPet] = useState<Omit<Pet, "idPet">>({
@@ -15,10 +15,12 @@ export default function PetForm() {
     description: "",
     user: { idUsuario: 0, nombreApellido: "" },
     specie: { idSpecie: 0, description: "" },
+    imageUrl: "",
   });
 
   const [users, setUsers] = useState<User[]>([]);
   const [species, setSpecies] = useState<Specie[]>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); 
 
   const navigate = useNavigate();
   const { idPet } = useParams();
@@ -65,19 +67,49 @@ export default function PetForm() {
         }
     };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      if (isEdit && idPet) {
-        await updatePet(Number(idPet), pet);
-      } else {
-        await createPet(pet);
-      }
-      navigate("/pets");
-    } catch (err) {
-      console.error("Error guardando mascota:", err);
+    // Manejar selección de imagen
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0]);
     }
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  try {
+    let imageUrl = pet.imageUrl;
+
+    // Subir imagen si hay una nueva seleccionada
+    if (selectedFile) {
+      const uploadedUrl = await uploadPetImage(selectedFile);
+      if (uploadedUrl) imageUrl = uploadedUrl;
+          console.log(uploadedUrl)
+    }
+
+// Construir payload con la URL de imagen
+// después de subir la imagen y tener la variable imageUrl
+const payload: PetPayload = {
+  name: pet.name,
+  birthday: pet.birthday ? pet.birthday.toString().substring(0, 10) : "",
+  description: pet.description,
+  imageUrl: imageUrl ?? null,
+  userId: pet.user.idUsuario,
+  specieId: pet.specie.idSpecie,
+};
+
+console.log("Payload que envío:", payload);
+
+if (isEdit && idPet) {
+  await updatePet(Number(idPet), payload);
+} else {
+  await createPet(payload);
+}
+
+    navigate("/pets");
+  } catch (err) {
+    console.error("Error guardando mascota:", err);
+  }
+};
 
   return (
     <div className="container my-5">
@@ -116,6 +148,26 @@ export default function PetForm() {
             className="form-control"
             required
           />
+        </div>
+
+        <div className="form-group mb-3">
+          <label>Imagen</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="form-control"
+          />
+          {pet.imageUrl && (
+            <div className="mt-3">
+              <img
+                src={`http://localhost:4000${pet.imageUrl}`}
+                alt="Mascota"
+                width="150"
+                style={{ borderRadius: "10px" }}
+              />
+            </div>
+          )}
         </div>
 
         <div className="form-group mb-3">

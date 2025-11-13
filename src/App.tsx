@@ -4,10 +4,14 @@ import Footer from "./components/Footer/footer.jsx";
 import AuthForm from "./components/AuthForm/authform.js"; // nuestro login/register
 import UserList from "./pages/UserList";
 import UserForm from "./pages/UserForm";
+import UserAdoptionList from './components/AdoptionRequest/UserAdoptionList.js'
+import RefugeAdoptionList from './components/AdoptionRequest/RefugeAdoptionList.js'
 import LandingPage from "./pages/LandingPage.js";
 import './styles/theme.scss';
 import AdoptionList from "./components/Adoption/adoptionlist";
-import PetForm from "./pages/PetForm";
+import PetForm from "./pages/pets/PetForm.js";
+import PetDetail from "./pages/pets/PetDetail.js";
+import AdoptionRequest from "./components/AdoptionRequest/AdoptionRequest.jsx";
 
 export default function App() {
   return (
@@ -25,6 +29,10 @@ export default function App() {
         <Route path="/pets" element={<AdoptionList />} />
         <Route path="/pets/new" element={<PetForm />} />
         <Route path="/pets/edit/:idPet" element={<PetForm />} />
+        <Route path="/pets/:idPet" element={<PetDetail />} />
+        <Route path="/adopt/:id" element={<AdoptionRequest />} />
+        <Route path="/my-requests" element={<UserAdoptionList />} />
+        <Route path="/refuge/requests" element={<RefugeAdoptionList />} />
       </Routes>
 
       <Footer />

@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo.png"; 
+import logo from "../../assets/logo.png";
 import { logout } from "../../services/AuthService";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState(null);
 
-  useEffect(() => {
+useEffect(() => {
+  const checkAuth = () => {
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); 
-    console.log('setIsLoggedIn',setIsLoggedIn);
-  }, []);
+    const role = localStorage.getItem("rol");
+    setIsLoggedIn(!!token);
+    console.log('el token es', token)
+    setUserRole(role);
+  };
+
+  checkAuth(); 
+
+  window.addEventListener("storage", checkAuth);
+
+  return () => window.removeEventListener("storage", checkAuth);
+}, );
 
   return (
     <header className="navbar-container">
@@ -47,6 +58,20 @@ const Navbar = () => {
               <li className="nav-item">
                 <a className="nav-link" href="/donar">Donar</a>
               </li>
+
+              {isLoggedIn && (
+                <li className="nav-item">
+                  {userRole === "refugio" ? (
+                    <Link className="nav-link" to="/refuge/requests">
+                      Mis solicitudes
+                    </Link>
+                  ) : (
+                    <Link className="nav-link" to="/my-requests">
+                      Mis solicitudes
+                    </Link>
+                  )}
+                </li>
+              )}
             </ul>
 
             {isLoggedIn ? (
@@ -58,7 +83,6 @@ const Navbar = () => {
                 Ingresar
               </a>
             )}
-
           </div>
         </div>
       </nav>

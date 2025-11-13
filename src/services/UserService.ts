@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User } from "../types/user";
 
-const API_URL = "http://localhost:3000/users"; 
+const API_URL = "http://localhost:4000/users"; 
 
 export const getUsers = () => axios.get<User[]>(API_URL);
 
