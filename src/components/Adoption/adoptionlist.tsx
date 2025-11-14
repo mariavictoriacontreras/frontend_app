@@ -60,7 +60,7 @@ export default function AdoptionList() {
     try {
       const res = await getUsers();
       const refugiosFiltrados = res.data.filter(
-        (u: User) => u.rol?.idRol === 2 // solo usuarios tipo refugio
+        (u: User) => u.rol?.idRol === 3 // solo usuarios tipo refugio
       );
       setRefugios(refugiosFiltrados);
     } catch (error) {

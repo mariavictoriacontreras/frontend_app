@@ -9,11 +9,16 @@ import { Pet, PetPayload } from "../../types/pet";
 import "../../styles/pet.scss";
 
 export default function PetForm() {
+  const usuarioLogueado = JSON.parse(localStorage.getItem("usuario") || "null");
+
   const [pet, setPet] = useState<Omit<Pet, "idPet">>({
     name: "",
     birthday: "",
     description: "",
-    user: { idUsuario: 0, nombreApellido: "" },
+    user: {
+      idUsuario: usuarioLogueado?.idUsuario ?? 0,
+      nombreApellido: usuarioLogueado?.nombreApellido ?? "",
+    },
     specie: { idSpecie: 0, description: "" },
     imageUrl: "",
   });
@@ -93,11 +98,11 @@ const payload: PetPayload = {
   birthday: pet.birthday ? pet.birthday.toString().substring(0, 10) : "",
   description: pet.description,
   imageUrl: imageUrl ?? null,
-  userId: pet.user.idUsuario,
+  userId: usuarioLogueado.id,
   specieId: pet.specie.idSpecie,
 };
 
-console.log("Payload que envío:", payload);
+// console.log("Payload que envío:", payload);
 
 if (isEdit && idPet) {
   await updatePet(Number(idPet), payload);
@@ -168,24 +173,6 @@ if (isEdit && idPet) {
               />
             </div>
           )}
-        </div>
-
-        <div className="form-group mb-3">
-          <label>Usuario</label>
-          <select
-            name="user"
-            value={pet.user.idUsuario}
-            onChange={handleChange}
-            className="form-control"
-            required
-            >
-            <option value="">Seleccionar usuario</option>
-            {users.map((u) => (
-                <option key={u.idUsuario} value={u.idUsuario}>
-                {u.nombreApellido}
-                </option>
-            ))}
-         </select>
         </div>
 
         <div className="form-group mb-3">
