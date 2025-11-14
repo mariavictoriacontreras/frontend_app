@@ -1,3 +1,6 @@
+@import '../styles/theme';
+
+
 .pet-form {
   max-width: 600px;
   margin: 0 auto;
@@ -32,22 +35,25 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   position: relative;
 
-  .back-btn {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
+  .btn-back {
     background: none;
     border: none;
+    color: $accent-color;
+    font-weight: 600;
     font-size: 1rem;
-    color: #666;
     cursor: pointer;
-    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 1rem;
+    transition: color 0.2s ease;
 
     &:hover {
-      color: #000;
-      transform: translateX(-3px);
+      color: darken($accent-color, 10%);
+      text-decoration: underline;
     }
   }
+  
 
   .pet-detail-card {
     display: flex;
@@ -108,4 +114,26 @@
       }
     }
   }
+}
+
+.pet-actions {
+  margin-top: 1.5rem;
+  text-align: center;
+  .btn-primary {
+    border-radius: 2rem;
+    background-color: #ff7f50;
+    padding: 0.6rem 1.5rem;
+   }
+      .btn-adopt {
+        color: white;
+        border: none;
+        border-radius: 2rem;
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        transition: 0.3s;
+        &:hover {
+          background-color: darken(#ff7f50, 7%);
+          transform: scale(1.03);
+        }
+      }
 }

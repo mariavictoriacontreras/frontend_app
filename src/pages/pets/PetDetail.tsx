@@ -52,6 +52,14 @@ export default function PetDetail() {
           <p><strong>Usuario:</strong> {pet.user?.nombreApellido || "No asignado"}</p>
         </div>
       </div>
+        <div className="pet-actions mt-3">
+            <button
+              className="btn btn-adopt btn-primary "
+              onClick={() => navigate(`/adopt/${idPet}`)}
+            >
+              Adoptar
+            </button>
+          </div>
     </div>
   );
 }
