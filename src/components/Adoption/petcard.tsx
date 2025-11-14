@@ -68,13 +68,19 @@ export default function PetCard({ pet, onDelete, currentUser }: PetCardProps) {
           </>
           )}
 
-           {/* Si no está logueado o es rol 1: botón Adoptar */}
+           {/* Si no está logueado o es rol 2: botón Adoptar */}
           {(!isLogged || rol === "usuario") && (
             <button
               className="btn-adopt"
               onClick={(e) => {
                 e.stopPropagation();
-                 navigate(`/pets/edit/${pet.idPet}`);
+                 if (!isLogged) {
+                  // Si no está logueado /login
+                  navigate('/login');
+                } else {
+                // Si está logueado rol "usuario" / adopt
+                  navigate(`/adopt/${pet.idPet}`);
+                }
               }}
             >
               Adoptar

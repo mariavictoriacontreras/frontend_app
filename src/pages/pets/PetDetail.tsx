@@ -2,12 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPetById } from "../../services/PetService";
 import { Pet } from "../../types/pet";
+import { useAuth } from "../../context/AuthContext";
 import "../../styles/pet.scss";
 
-export default function PetDetail() {
+export default function PetDetail() { 
   const { idPet } = useParams();
   const navigate = useNavigate();
   const [pet, setPet] = useState<Pet | null>(null);
+
+  // ** Obtener el usuario del contexto**
+  const { user } = useAuth(); 
+
+  const rol = user?.rol;
+  const isLogged = !!user;
 
   useEffect(() => {
     if (idPet) fetchPet(Number(idPet));
@@ -49,17 +56,28 @@ export default function PetDetail() {
           {pet.birthday && (
             <p><strong>Nacimiento:</strong> {new Date(pet.birthday).toLocaleDateString()}</p>
           )}
-          <p><strong>Usuario:</strong> {pet.user?.nombreApellido || "No asignado"}</p>
+          <p><strong>Refugio:</strong> {pet.user?.nombreApellido || "No asignado"}</p>
         </div>
       </div>
+      {/* El botón solo es visible si NO está logueado O si el rol es "usuario" */}
+        {(!isLogged || rol === "usuario") && (
         <div className="pet-actions mt-3">
             <button
               className="btn btn-adopt btn-primary "
-              onClick={() => navigate(`/adopt/${idPet}`)}
+              onClick={() => {
+                if (!isLogged) {
+                  // Si no está logueado /login
+                  navigate('/login');
+                } else {
+                // Si está logueado rol "usuario" /adopt
+                  navigate(`/adopt/${pet.idPet}`);
+                }
+              }}
             >
               Adoptar
             </button>
           </div>
+          )}
     </div>
   );
 }
