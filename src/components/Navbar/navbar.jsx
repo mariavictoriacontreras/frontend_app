@@ -1,36 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./navbar.scss";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png"; 
-import { useAuth } from "../../context/AuthContext"; // 🔹 Usamos el contexto
+import { Link, useLocation } from "react-router-dom";
+import logo from "../../assets/logo.png";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
-  const { user, logout } = useAuth(); // 🔹 Ahora el user y logout vienen del contexto
-  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, logout } = useAuth();
 
-
-const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRole, setUserRole] = useState(null);
-  const location = useLocation(); 
-
-  // Redirige si se desloguea
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
-    const checkAuth = () => {
-      const token = localStorage.getItem("token");
-      const role = localStorage.getItem("rol");
-      console.log('el rol es',role);
-      setIsLoggedIn(!!token);
-      setUserRole(role);
-    };
-    checkAuth();
-    window.addEventListener("storage", checkAuth);
-    return () => window.removeEventListener("storage", checkAuth);
-  }, []);
+  const isLoggedIn = !!user;
+  const userRole = user?.rol;
 
   return (
     <header className="navbar-container">
@@ -45,9 +24,6 @@ const Navbar = () => {
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -55,37 +31,25 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <Link
-                  className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
-                  to="/"
-                >
+                <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} to="/">
                   Inicio
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link
-                  className={`nav-link ${location.pathname.startsWith("/pets") ? "active" : ""}`}
-                  to="/pets"
-                >
+                <Link className={`nav-link ${location.pathname.startsWith("/pets") ? "active" : ""}`} to="/pets">
                   Adoptar
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link
-                  className={`nav-link ${location.pathname.startsWith("/transitos") ? "active" : ""}`}
-                  to="/transitos"
-                >
+                <Link className={`nav-link ${location.pathname.startsWith("/transitos") ? "active" : ""}`} to="/transitos">
                   Tránsitos
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link
-                  className={`nav-link ${location.pathname.startsWith("/donar") ? "active" : ""}`}
-                  to="/donar"
-                >
+                <Link className={`nav-link ${location.pathname.startsWith("/donar") ? "active" : ""}`} to="/donar">
                   Donar
                 </Link>
               </li>
@@ -93,17 +57,11 @@ const Navbar = () => {
               {isLoggedIn && (
                 <li className="nav-item">
                   {userRole === "refugio" ? (
-                    <Link
-                      className={`nav-link ${location.pathname.startsWith("/refuge/requests") ? "active" : ""}`}
-                      to="/refuge/requests"
-                    >
+                    <Link className={`nav-link ${location.pathname.startsWith("/refuge/requests") ? "active" : ""}`} to="/refuge/requests">
                       Mis solicitudes
                     </Link>
                   ) : (
-                    <Link
-                      className={`nav-link ${location.pathname.startsWith("/my-requests") ? "active" : ""}`}
-                      to="/my-requests"
-                    >
+                    <Link className={`nav-link ${location.pathname.startsWith("/my-requests") ? "active" : ""}`} to="/my-requests">
                       Mis solicitudes
                     </Link>
                   )}
@@ -111,10 +69,10 @@ const Navbar = () => {
               )}
             </ul>
 
-            {user ? (
-              <button onClick={logout} className="btn-ingresar ms-auto">
+            {isLoggedIn ? (
+              <a onClick={logout} className="btn-ingresar ms-auto">
                 Salir
-              </button>
+              </a>
             ) : (
               <Link to="/login" className="btn-ingresar ms-auto">
                 Ingresar
