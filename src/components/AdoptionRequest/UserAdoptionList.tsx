@@ -5,7 +5,7 @@ import "./AdoptionRequestList.scss";
 interface AdoptionRequest {
   idRequest: number;
   state: string;
-  pet: { name: string; photo?: string };
+  pet: { name: string; imageUrl?: string };
 }
 
 export default function UserAdoptionList() {
@@ -39,9 +39,21 @@ export default function UserAdoptionList() {
           {requests.map((r) => (
             <div className="request-card" key={r.idRequest}>
               <div className="pet-photo">
-                <img
+                {/* <img
                   src={r.pet.photo || "/img/default-pet.jpg"}
                   alt={r.pet.name}
+                /> */}
+                                <img
+                  src={
+                    r.pet.imageUrl
+                      ? `http://localhost:4000${r.pet.imageUrl}`
+                      : "/default-pet.png"
+                  }
+                  alt={r.pet.name}
+                  className="pet-img"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/default-pet.png";
+                  }}
                 />
               </div>
 
