@@ -1,6 +1,9 @@
 @import '../../styles/theme';
 
 .navbar-container {
+  .mobile-toggle-btn {
+    display: none;
+  }
   background-color: $bg-color;
   padding: 0.5rem 1rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
