@@ -43,13 +43,13 @@ const Navbar = () => {
               </li>
 
               <li className="nav-item">
-                <Link className={`nav-link ${location.pathname.startsWith("/transitos") ? "active" : ""}`} to="/transitos">
+                <Link className={`nav-link ${location.pathname.startsWith("/transitos") ? "active" : ""}`} >
                   Tránsitos
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link className={`nav-link ${location.pathname.startsWith("/donar") ? "active" : ""}`} to="/donar">
+                <Link className={`nav-link ${location.pathname.startsWith("/donar") ? "active" : ""}`} >
                   Donar
                 </Link>
               </li>
