@@ -25,7 +25,7 @@ const LandingPage: React.FC = () => {
         <h1 className="banner-title">
             Miles de animales esperan un hogar. <br /> Abrí tu corazón… y ganá un compañero fiel.
         </h1>
-        <button onClick={handleScroll} className="btn btn-primary banner-btn mt-3">
+        <button className="btn btn-primary banner-btn mt-3"  onClick={() => (window.location.href = "http://localhost:5173/pets")}>
             Adoptá ahora
         </button>
         </section>
@@ -45,7 +45,7 @@ const LandingPage: React.FC = () => {
                 alt="Perro"
                 className="option-img"
             />
-            <button className="btn-primary mt-2">Ver perros</button>
+            <button className="btn-primary mt-2"  onClick={() => (window.location.href = "http://localhost:5173/pets?specie=2")}>Ver perros</button>
             </div>
             <div className="option-card">
             <img
@@ -53,7 +53,7 @@ const LandingPage: React.FC = () => {
                 alt="Gato"
                 className="option-img"
             />
-            <button className="btn-primary mt-2">Ver gatos</button>
+            <button className="btn-primary mt-2"  onClick={() => (window.location.href = "http://localhost:5173/pets?specie=1")}>Ver gatos</button>
             </div>
         </div>
         </section>
