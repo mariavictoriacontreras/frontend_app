@@ -70,8 +70,17 @@ export default function AdoptionList() {
 
   //user logued
   const usuarioLogueado = JSON.parse(localStorage.getItem("usuario") || "null");
+  const esAdmin = usuarioLogueado?.rol === "admin";
+  const esUsuario = usuarioLogueado?.rol === "usuario";
   const esRefugio = usuarioLogueado?.rol === "refugio";
-  // console.log("user", usuarioLogueado);
+
+  console.log("user", usuarioLogueado);
+
+  useEffect(() => {
+    if (esRefugio) {
+      setSelectedRefugio(usuarioLogueado?.id);
+    }
+  }, []);
 
   const handleDelete = async (idPet: number) => {
     if (confirm("¿Seguro que querés eliminar esta mascota?")) {
@@ -170,20 +179,22 @@ export default function AdoptionList() {
         </div>
 
         {/* Select de refugios */}
-        <select
-          className="refugio-select"
-          value={selectedRefugio}
-          onChange={(e) =>
-            setSelectedRefugio(e.target.value ? Number(e.target.value) : "")
-          }
-        >
-          <option value="">Todos los refugios</option>
-          {refugios.map((r) => (
-            <option key={r.idUsuario} value={r.idUsuario}>
-              {r.nombreApellido}
-            </option>
-          ))}
-        </select>
+        {!esRefugio && (
+          <select
+            className="refugio-select"
+            value={selectedRefugio}
+            onChange={(e) =>
+              setSelectedRefugio(e.target.value ? Number(e.target.value) : "")
+            }
+          >
+            <option value="">Todos los refugios</option>
+            {refugios.map((r) => (
+              <option key={r.idUsuario} value={r.idUsuario}>
+                {r.nombreApellido}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
       <div className="pets-grid">
